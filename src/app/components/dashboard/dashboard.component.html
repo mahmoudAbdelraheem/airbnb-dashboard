@@ -1,0 +1,35 @@
+<div class="dashboard">
+  <h1>Airbnb Dashboard</h1>
+
+  <ul>
+    <li *ngFor="let airbnb of airbnbs$ | async">
+      <h2>{{ airbnb.title }}</h2>
+      <h2>Location: {{ airbnb.location }}</h2>
+      <h2>Price: {{ airbnb.price }}</h2>
+      <button (click)="deleteAirbnb(airbnb.id)">Delete</button>
+    </li>
+  </ul>
+
+  <h3>Add New Airbnb</h3>
+  <form (ngSubmit)="addAirbnb(newAirbnb)">
+    <input
+      type="text"
+      placeholder="Title"
+      [(ngModel)]="newAirbnb.title"
+      name="title"
+    />
+    <input
+      type="number"
+      placeholder="Price"
+      [(ngModel)]="newAirbnb.price"
+      name="price"
+    />
+    <input
+      type="text"
+      placeholder="Location"
+      [(ngModel)]="newAirbnb.location"
+      name="location"
+    />
+    <button type="submit">Add Airbnb</button>
+  </form>
+</div>
