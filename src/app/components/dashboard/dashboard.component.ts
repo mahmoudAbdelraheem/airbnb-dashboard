@@ -18,14 +18,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    FormsModule,
-    AsyncPipe,
-    CommonModule,
-    MatCardModule,
-    RouterModule,
-    
-  ],
+  imports: [FormsModule, AsyncPipe, CommonModule, MatCardModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

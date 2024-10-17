@@ -1,1 +1,22 @@
-<p>sidebar works!</p>
+<mat-nav-list appAccordion>
+  @for (menuitem of menuItems.getMenuitem(); track menuitem.state) {
+  <mat-list-item>
+    <a
+      appAccordionToggle
+      [routerLink]="
+        menuitem.state === 'dashboard'
+          ? ['/dashboard']
+          : ['/dashboard', menuitem.state]
+      "
+      class="flex gap-1"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="
+        menuitem.state === 'dashboard' ? { exact: true } : { exact: false }
+      "
+    >
+      <mat-icon>{{ menuitem.icon }}</mat-icon>
+      <span>{{ menuitem.name }}</span>
+    </a>
+  </mat-list-item>
+  }
+</mat-nav-list>
