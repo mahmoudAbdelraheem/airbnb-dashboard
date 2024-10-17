@@ -4,6 +4,7 @@ import { authGuard } from './guards/auth.guard';
 import { LoginComponent } from './components/login/login.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LayoutsComponent } from './layouts/layouts.component';
 
 export const routes: Routes = [
   //! default route for landing
@@ -14,9 +15,18 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    component: LayoutsComponent,
     canActivate: [authGuard],
+
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: DashboardComponent,
+      },
+    ],
   },
+
   {
     path: 'login',
     component: LoginComponent,

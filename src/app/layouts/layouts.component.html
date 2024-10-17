@@ -1,0 +1,40 @@
+<div>
+  <mat-toolbar class="topbar telative">
+    <div class="flex justify-around">
+      <button
+        mat-icon-button
+        (click)="snav.toggle()"
+        value="sidebarclosed"
+        style="vertical-align: bottom"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span fxShow="false" class="mx-3" fxShow.gt-xs> Airbnb </span>
+    </div>
+    <span fxFlex></span>
+    <span class="example-spacer"></span>
+    <app-header></app-header>
+  </mat-toolbar>
+  <mat-sidenav-container
+    class="example-sidenav-container"
+    [style.marginTop.px]="mobileQuery.matches ? 0 : 0"
+    style="background: none"
+  >
+    <mat-sidenav
+      #snav
+      id="snav"
+      class="dark-sidebar pl-xs"
+      [mode]="mobileQuery.matches ? 'side' : 'over'"
+      fixedTopGap="0"
+      [opened]="mobileQuery.matches"
+      [disableClose]="mobileQuery.matches"
+    >
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content class="page-wrapper bg-transparent w-full h-full">
+      <div class="page-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
