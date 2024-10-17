@@ -1,35 +1,52 @@
-<div class="dashboard">
-  <h1>Airbnb Dashboard</h1>
-
-  <ul>
-    <li *ngFor="let airbnb of airbnbs$ | async">
-      <h2>{{ airbnb.title }}</h2>
-      <h2>Location: {{ airbnb.location }}</h2>
-      <h2>Price: {{ airbnb.price }}</h2>
-      <button (click)="deleteAirbnb(airbnb.id)">Delete</button>
-    </li>
-  </ul>
-
-  <h3>Add New Airbnb</h3>
-  <form (ngSubmit)="addAirbnb(newAirbnb)">
-    <input
-      type="text"
-      placeholder="Title"
-      [(ngModel)]="newAirbnb.title"
-      name="title"
-    />
-    <input
-      type="number"
-      placeholder="Price"
-      [(ngModel)]="newAirbnb.price"
-      name="price"
-    />
-    <input
-      type="text"
-      placeholder="Location"
-      [(ngModel)]="newAirbnb.location"
-      name="location"
-    />
-    <button type="submit">Add Airbnb</button>
-  </form>
+<div class="w-full h-full">
+  <mat-card class="border-none shadow-none">
+    <mat-card-title class="p-5 border-none shadow-none"
+      >Dashboard</mat-card-title
+    >
+  </mat-card>
+  <br />
+  <div class="flex flex-row gap-3">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Total Category :</div>
+        <div class="text-gray-700 text-2xl">{{ categoryLength }}</div>
+        <p>
+          <button
+            class="text-center p-2 text-white bg-gray-500 rounded-md"
+            [routerLink]="['/dashboard/category']"
+          >
+            View Category
+          </button>
+        </p>
+      </div>
+    </div>
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Total Product :</div>
+        <div class="text-gray-700 text-2xl">{{ productLength }}</div>
+        <p>
+          <button
+            class="text-center p-2 text-white bg-gray-500 rounded-md"
+            [routerLink]="['/dashboard/product']"
+          >
+            View Product
+          </button>
+        </p>
+      </div>
+    </div>
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Total Bill :</div>
+        <div class="text-gray-700 text-2xl">{{ billLength }}</div>
+        <p>
+          <button
+            class="text-center p-2 text-white bg-gray-500 rounded-md"
+            [routerLink]="['/dashboard/bill']"
+          >
+            View Bill
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
