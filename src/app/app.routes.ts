@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LayoutsComponent } from './layouts/layouts.component';
+import { CategoryComponent } from './components/category/category.component';
 
 export const routes: Routes = [
   //! default route for landing
@@ -23,6 +24,12 @@ export const routes: Routes = [
         path: '',
         pathMatch: 'full',
         component: DashboardComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'category',
+        component: CategoryComponent,
+        canActivate: [authGuard],
       },
     ],
   },

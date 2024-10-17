@@ -1,5 +1,5 @@
-<div>
-  <mat-toolbar class="topbar telative">
+<div class="flex flex-col h-screen">
+  <mat-toolbar class="topbar">
     <div class="flex justify-around">
       <button
         mat-icon-button
@@ -15,23 +15,20 @@
     <span class="example-spacer"></span>
     <app-header></app-header>
   </mat-toolbar>
-  <mat-sidenav-container
-    class="example-sidenav-container"
-    [style.marginTop.px]="mobileQuery.matches ? 0 : 0"
-    style="background: none"
-  >
+
+  <mat-sidenav-container class="flex-1">
     <mat-sidenav
       #snav
       id="snav"
-      class="dark-sidebar pl-xs "
+      class="dark-sidebar pl-xs"
       [mode]="mobileQuery.matches ? 'side' : 'over'"
-      fixedTopGap="0"
       [opened]="mobileQuery.matches"
       [disableClose]="mobileQuery.matches"
     >
-      <app-sidebar></app-sidebar>
+      <app-sidebar class="h-full"></app-sidebar>
     </mat-sidenav>
-    <mat-sidenav-content class="page-wrapper bg-transparent w-full h-full">
+
+    <mat-sidenav-content class="bg-transparent">
       <div class="page-content">
         <router-outlet></router-outlet>
       </div>

@@ -13,7 +13,13 @@ const MENUITEMS: Menu[] = [
     name: 'Dashboard',
     icon: 'dashboard',
     role: '',
-  }, // Fixed typo and added closing quote
+  },
+  {
+    state: 'category',
+    name: 'Manager Category',
+    icon: 'category',
+    role: '',
+  },
 ];
 
 @Injectable()
