@@ -6,9 +6,9 @@ import { LandingComponent } from './components/landing/landing.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LayoutsComponent } from './layouts/layouts.component';
 import { CategoryComponent } from './components/category/category.component';
+import { ProductComponent } from './components/product/product.component';
 
 export const routes: Routes = [
-  //! default route for landing
   {
     path: '',
     component: LandingComponent,
@@ -24,23 +24,22 @@ export const routes: Routes = [
         path: '',
         pathMatch: 'full',
         component: DashboardComponent,
-        canActivate: [authGuard],
       },
       {
         path: 'category',
         component: CategoryComponent,
-        canActivate: [authGuard],
+      },
+      {
+        path: 'product',
+        component: ProductComponent,
       },
     ],
   },
-
   {
     path: 'login',
     component: LoginComponent,
     title: 'Airbnb Login',
   },
-
-  //! not found route
   {
     path: '**',
     component: NotFoundComponent,

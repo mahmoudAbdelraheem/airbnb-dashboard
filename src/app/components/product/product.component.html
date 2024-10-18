@@ -1,0 +1,53 @@
+<h1 class="text-3xl font-semibold text-gray-800 mb-6">Airbnb Listings</h1>
+
+<table
+  class="min-w-full table-auto border-collapse border border-gray-300 shadow-md rounded-lg"
+>
+  <thead>
+    <tr class="bg-gray-100 border-b border-gray-300">
+      <th class="text-left px-4 py-2 font-medium text-gray-600">Title</th>
+      <th class="text-left px-4 py-2 font-medium text-gray-600">Description</th>
+      <th class="text-left px-4 py-2 font-medium text-gray-600">Location</th>
+      <th class="text-center px-4 py-2 font-medium text-gray-600">Approved</th>
+      <th class="text-center px-4 py-2 font-medium text-gray-600">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr
+      class="hover:bg-gray-50 border-b border-gray-200"
+      *ngFor="let airbnb of airbnbs$ | async"
+    >
+      <td class="px-4 py-2 text-gray-800">{{ airbnb.title }}</td>
+      <td class="px-4 py-2 text-gray-800 truncate max-w-xs">
+        {{ airbnb.description }}
+      </td>
+      <td class="px-4 py-2 text-gray-800">{{ airbnb.location }}</td>
+      <td class="px-4 py-2 text-center">
+        <span
+          class="inline-block px-3 py-1 rounded-full text-sm font-semibold {{
+            airbnb.approved
+              ? 'bg-green-100 text-green-600'
+              : 'bg-red-100 text-red-600'
+          }}"
+        >
+          {{ airbnb.approved ? "Approved" : "Not Approved" }}
+        </span>
+      </td>
+      <td class="px-4 py-2 text-center">
+        <button
+          (click)="toggleApproval(airbnb.id, airbnb.approved)"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded mr-2"
+        >
+          {{ airbnb.approved ? "Revoke" : "Approve" }}
+        </button>
+        <button
+          (click)="deleteAirbnb(airbnb.id)"
+          class="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 rounded"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

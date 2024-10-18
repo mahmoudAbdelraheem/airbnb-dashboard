@@ -8,18 +8,21 @@ import {
   User,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { from, map, Observable, of } from 'rxjs';
+import { Observable, from, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: Auth, public router: Router) {}
+  constructor(private auth: Auth, private router: Router) {}
 
   getAuthState(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
       onAuthStateChanged(this.auth, (user) => {
+        console.log('user', user);
+
         observer.next(!!user);
+        observer.complete();
       });
     });
   }
@@ -41,6 +44,10 @@ export class AuthService {
 
   login(email: string, password: string) {
     return from(signInWithEmailAndPassword(this.auth, email, password));
+  }
+
+  logout() {
+    this.auth.signOut().then(() => this.router.navigate(['/login']));
   }
 
   canActivate(): Observable<boolean> {
