@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -6,15 +6,22 @@ import {
   updateProfile,
   onAuthStateChanged,
   User,
+  user,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, from, map, of } from 'rxjs';
+import { Iuser } from '../models/iuser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: Auth, private router: Router) {}
+  user$: Observable<any>;
+
+  constructor(private auth: Auth, private router: Router) {
+    this.user$ = user(this.auth);
+  }
+  currentUserSig = signal<Iuser | null | undefined>(undefined);
 
   getAuthState(): Observable<boolean> {
     return new Observable<boolean>((observer) => {

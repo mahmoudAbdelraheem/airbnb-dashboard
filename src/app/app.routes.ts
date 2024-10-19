@@ -7,6 +7,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LayoutsComponent } from './layouts/layouts.component';
 import { CategoryComponent } from './components/category/category.component';
 import { ProductComponent } from './components/product/product.component';
+import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
   {
@@ -38,7 +39,12 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    title: 'Airbnb Login',
+    title: 'Login',
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    title: 'Register',
   },
   {
     path: '**',

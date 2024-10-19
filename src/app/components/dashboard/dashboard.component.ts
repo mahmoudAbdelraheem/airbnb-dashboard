@@ -51,19 +51,4 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
-
-  // async addAirbnb(airbnb: any) {
-  //   const collectionRef = collection(this.firestore, 'listingsTest');
-  //   await addDoc(collectionRef, airbnb);
-  // }
-
-  // async updateAirbnb(id: string, airbnb: any) {
-  //   const docRef = doc(this.firestore, `listingsTest/${id}`);
-  //   await updateDoc(docRef, airbnb);
-  // }
-
-  // async deleteAirbnb(id: string) {
-  //   const docRef = doc(this.firestore, `listingsTest/${id}`);
-  //   await deleteDoc(docRef);
-  // }
 }
