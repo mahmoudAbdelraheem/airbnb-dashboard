@@ -8,6 +8,7 @@ import { LayoutsComponent } from './layouts/layouts.component';
 import { CategoryComponent } from './components/category/category.component';
 import { ProductComponent } from './components/product/product.component';
 import { RegisterComponent } from './components/register/register.component';
+import { UserComponent } from './components/user/user.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,10 @@ export const routes: Routes = [
       {
         path: 'product',
         component: ProductComponent,
+      },
+      {
+        path: 'user',
+        component: UserComponent,
       },
     ],
   },

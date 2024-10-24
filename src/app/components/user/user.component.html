@@ -1,0 +1,58 @@
+<h1 class="text-3xl font-semibold text-gray-800 mb-6">Airbnb Listings</h1>
+
+<table
+  class="min-w-full table-auto border-collapse border border-gray-300 shadow-md rounded-lg"
+>
+  <thead>
+    <tr class="bg-gray-100 border-b border-gray-300">
+      <th class="text-left px-4 py-2 font-medium text-gray-600">ID</th>
+      <th class="text-left px-4 py-2 font-medium text-gray-600">
+        Display Name
+      </th>
+      <th class="text-left px-4 py-2 font-medium text-gray-600">Email</th>
+      <th class="text-left px-4 py-2 font-medium text-gray-600">
+        Display Image
+      </th>
+      <th class="text-center px-4 py-2 font-medium text-gray-600">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr
+      class="hover:bg-gray-50 border-b border-gray-200"
+      *ngFor="let user of users$ | async"
+    >
+      <td class="px-4 py-2 text-gray-800">{{ user.id }}</td>
+      <td class="px-4 py-2">
+        <input
+          [(ngModel)]="user.displayName"
+          class="border border-gray-300 rounded px-2 py-1 w-full"
+        />
+      </td>
+      <td class="px-4 py-2 text-gray-800 truncate max-w-xs">
+        {{ user.email }}
+      </td>
+      <td class="px-4 py-2 text-gray-800">
+        <img
+          [src]="user.image"
+          alt="User Image"
+          class="rounded-full w-10 h-10 object-cover"
+        />
+      </td>
+      <td class="px-4 py-2 text-center">
+        <button
+          (click)="deleteUser(user.id)"
+          class="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 m-2 rounded"
+        >
+          Delete
+        </button>
+        <button
+          (click)="saveUser(user.id, user.displayName)"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 m-2 rounded"
+        >
+          Save
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
