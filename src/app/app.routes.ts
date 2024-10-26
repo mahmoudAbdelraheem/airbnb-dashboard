@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LayoutsComponent } from './layouts/layouts.component';
-import { CategoryComponent } from './components/category/category.component';
+import { ManageCategoryComponent } from './components/manage-category/manage-category.component';
 import { ProductComponent } from './components/product/product.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserComponent } from './components/user/user.component';
@@ -29,7 +29,7 @@ export const routes: Routes = [
       },
       {
         path: 'category',
-        component: CategoryComponent,
+        component: ManageCategoryComponent,
       },
       {
         path: 'product',

@@ -16,8 +16,20 @@ const MENUITEMS: Menu[] = [
   },
   {
     state: 'category',
-    name: 'Manager Category',
+    name: 'Manage Category',
     icon: 'category',
+    role: '',
+  },
+  {
+    state: 'product',
+    name: 'Manage Product',
+    icon: 'inventory_2',
+    role: '',
+  },
+  {
+    state: 'user',
+    name: 'Manage User',
+    icon: 'account_circle',
     role: '',
   },
 ];

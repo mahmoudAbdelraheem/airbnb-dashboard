@@ -1,1 +1,72 @@
-<p>category works!</p>
+<mat-toolbar>
+  <mat-toolbar-row fxLayout="row" class="m-5">
+    <span class="text-center" color="primary"
+      >{{ dialogData.action }} Category</span
+    >
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-dialog-content class="mat-typography text-black">
+  <form [formGroup]="categoryForm" class="category-form">
+    <div class="form-column">
+      <mat-form-field appearance="fill">
+        <mat-label>Label</mat-label>
+        <input matInput formControlName="label" required />
+        @if(categoryForm.controls['label'].invalid &&
+        categoryForm.controls['label'].touched){
+        @if(categoryForm.controls['label'].errors?.['required']){
+        <mat-error>This field is required</mat-error>
+        } }
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Icon Name</mat-label>
+        <input matInput formControlName="icon" required />
+        <mat-hint>Use Material Icons names</mat-hint>
+        @if(categoryForm.controls['icon'].invalid &&
+        categoryForm.controls['icon'].touched){
+        @if(categoryForm.controls['icon'].errors?.['required']){
+        <mat-error>This field is required</mat-error>
+        } }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" required></textarea>
+        @if(categoryForm.controls['description'].invalid &&
+        categoryForm.controls['description'].touched){
+        @if(categoryForm.controls['description'].errors?.['required']){
+        <mat-error>This field is required</mat-error>
+        } }
+      </mat-form-field>
+    </div>
+
+    <div class="file-input">
+      <button type="button" mat-raised-button (click)="fileInput.click()">
+        Choose Image
+      </button>
+      <input
+        hidden
+        (change)="onFileSelected($event)"
+        #fileInput
+        type="file"
+        accept="image/*"
+      />
+      @if(selectedFile!=null){
+
+      <span>{{ selectedFile.name }}</span>
+      }
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center" class="p-3">
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    class="mx-3"
+    (click)="handleSubmit()"
+    [disabled]="!(categoryForm.valid && categoryForm.dirty)"
+  >
+    {{ action }}
+  </button>
+  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+</mat-dialog-actions>
