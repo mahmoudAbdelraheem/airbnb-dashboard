@@ -94,13 +94,14 @@ export class CategoryService {
       }
       console.log(categoryId);
 
-      const categoryRef = doc(this.firestore, 'categories/${categoryId}');
+      const categoryRef = doc(this.firestore, 'categories', categoryId);
       await updateDoc(categoryRef, updateData);
 
       this.snackBar.open('Category updated successfully', 'Close', {
         duration: 3000,
       });
     } catch (error) {
+      console.log(error);
       this.snackBar.open('Error updating category', 'Close', {
         duration: 5000,
         panelClass: ['error-snackbar'],
