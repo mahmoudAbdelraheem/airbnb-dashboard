@@ -1,5 +1,5 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   addDoc,
   collection,
@@ -9,21 +9,30 @@ import {
   Firestore,
   updateDoc,
 } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [NgFor, CommonModule],
+  imports: [NgFor, CommonModule, ConfirmDialogComponent],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })
 export class ProductComponent {
   airbnbs$: Observable<any[]>;
+  isDialogOpen = false;
+  airbnbToDelete: string | null = null;
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private dialog: MatDialog) {
     const collectionRef = collection(this.firestore, 'listings');
     this.airbnbs$ = collectionData(collectionRef, { idField: 'id' });
+  }
+
+  openDeleteDialog(id: string): void {
+    this.airbnbToDelete = id;
+    this.isDialogOpen = true;
   }
 
   async addAirbnb(airbnb: any) {
@@ -36,9 +45,28 @@ export class ProductComponent {
     await updateDoc(docRef, airbnb);
   }
 
-  async deleteAirbnb(id: string) {
-    const docRef = doc(this.firestore, `listings/${id}`);
-    await deleteDoc(docRef);
+  // async deleteAirbnb(id: string) {
+  //   const docRef = doc(this.firestore, `listings/${id}`);
+  //   await deleteDoc(docRef);
+  // }
+
+  async handleDelete(confirmed: boolean) {
+    if (confirmed && this.airbnbToDelete) {
+      try {
+        const docRef = doc(this.firestore, `listings/${this.airbnbToDelete}`);
+        await deleteDoc(docRef);
+        console.log(
+          `Airbnb with ID: ${this.airbnbToDelete} deleted successfully`
+        );
+      } catch (error) {
+        console.error('Error deleting Airbnb:', error);
+      }
+    } else {
+      console.log('Deletion canceled');
+    }
+
+    this.isDialogOpen = false;
+    this.airbnbToDelete = null;
   }
 
   async toggleApproval(id: string, currentStatus: boolean) {
