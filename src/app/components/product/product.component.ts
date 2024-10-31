@@ -11,6 +11,8 @@ import {
 } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ListingComponent } from '../dialog/listing/listing.component';
 
 @Component({
   selector: 'app-product',
@@ -21,8 +23,10 @@ import { Observable } from 'rxjs';
 })
 export class ProductComponent {
   airbnbs$: Observable<any[]>;
+  isDialogOpen = false;
+  airbnbToDelete: string | null = null;
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private dialog: MatDialog) {
     const collectionRef = collection(this.firestore, 'listings');
     this.airbnbs$ = collectionData(collectionRef, { idField: 'id' });
   }
@@ -75,7 +79,7 @@ export class ProductComponent {
       data: airbnb,
       maxWidth: '1000px',
       width: '90%',
-      panelClass: 'custom-dialog'
+      panelClass: 'custom-dialog',
     });
   }
 }
