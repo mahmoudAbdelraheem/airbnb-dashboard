@@ -10,6 +10,8 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { ListingComponent } from '../dialog/listing/listing.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product',
@@ -20,8 +22,9 @@ import { Observable } from 'rxjs';
 })
 export class ProductComponent {
   airbnbs$: Observable<any[]>;
+  
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore,private dialog: MatDialog) {
     const collectionRef = collection(this.firestore, 'listings');
     this.airbnbs$ = collectionData(collectionRef, { idField: 'id' });
   }
@@ -44,5 +47,13 @@ export class ProductComponent {
   async toggleApproval(id: string, currentStatus: boolean) {
     const docRef = doc(this.firestore, `listings/${id}`);
     await updateDoc(docRef, { approved: !currentStatus });
+  }
+  viewListing(airbnb: any) {
+    this.dialog.open(ListingComponent, {
+      data: airbnb,
+      maxWidth: '1000px',
+      width: '90%',
+      panelClass: 'custom-dialog'
+    });
   }
 }

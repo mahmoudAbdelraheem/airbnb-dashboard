@@ -36,6 +36,12 @@
       </td>
       <td class="px-4 py-2 text-center">
         <button
+          (click)="viewListing(airbnb)"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded mr-2"
+        >
+          View
+        </button>
+        <button
           (click)="toggleApproval(airbnb.id, airbnb.approved)"
           class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded mr-2"
         >

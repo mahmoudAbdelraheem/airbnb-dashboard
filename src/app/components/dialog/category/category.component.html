@@ -18,6 +18,15 @@
         } }
       </mat-form-field>
       <mat-form-field appearance="fill">
+        <mat-label>Label Arabic</mat-label>
+        <input matInput formControlName="labelAr" required />
+        @if(categoryForm.controls['labelAr'].invalid &&
+        categoryForm.controls['labelAr'].touched){
+        @if(categoryForm.controls['labelAr'].errors?.['required']){
+        <mat-error>This field is required</mat-error>
+        } }
+      </mat-form-field>
+      <mat-form-field appearance="fill">
         <mat-label>Icon Name</mat-label>
         <input matInput formControlName="icon" required />
         <mat-hint>Use Material Icons names</mat-hint>
