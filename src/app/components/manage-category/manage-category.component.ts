@@ -20,9 +20,11 @@ import { CategoryComponent } from '../dialog/category/category.component';
   styleUrl: './manage-category.component.scss',
 })
 export class ManageCategoryComponent implements OnInit {
-  displayedColumn: string[] = ['name', 'description', 'image', 'edit'];
+  displayedColumn: string[] = ['name','nameAr', 'description', 'image', 'edit'];
   dataSource: any;
   responseMessage: any;
+  isDialogOpen = false;
+  airbnbToDelete: string | null = null;
   constructor(
     private categoryService: CategoryService,
     private router: Router,
@@ -32,7 +34,10 @@ export class ManageCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.tableDate();
   }
-
+  openDeleteDialog(id: string): void {
+    this.airbnbToDelete = id;
+    this.isDialogOpen = true;
+  }
   tableDate() {
     this.categoryService.getCategories().subscribe(
       (response: any) => {
@@ -69,9 +74,27 @@ export class ManageCategoryComponent implements OnInit {
       }
     );
   }
-  handleDeleteAction(value: any) {
-    this.categoryService.delete(value.id);
+  async handleDelete(confirmed: boolean) {
+    if (confirmed && this.airbnbToDelete) {
+      try {
+        this.categoryService.delete(this.airbnbToDelete);
+        console.log(
+          `Airbnb with ID: ${this.airbnbToDelete} deleted successfully`
+        );
+      } catch (error) {
+        console.error('Error deleting Airbnb:', error);
+      }
+    } else {
+      console.log('Deletion canceled');
+    }
+
+    this.isDialogOpen = false;
+    this.airbnbToDelete = null;
   }
+
+  // handleDeleteAction(value: any) {
+  //   this.categoryService.delete(value.id);
+  // }
   handleEditAction(value: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {

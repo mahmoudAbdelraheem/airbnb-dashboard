@@ -1,4 +1,4 @@
-<h1 class="text-3xl font-semibold text-gray-800 mb-6">Airbnb Listings</h1>
+<h1 class="text-3xl font-semibold text-gray-800 mb-6">Airbnb Seller</h1>
 
 <table
   class="min-w-full table-auto border-collapse border border-gray-300 shadow-md rounded-lg"
@@ -20,7 +20,7 @@
   <tbody>
     <tr
       class="hover:bg-gray-50 border-b border-gray-200"
-      *ngFor="let user of users$ | async"
+      *ngFor="let user of seller$ | async"
     >
       <td class="px-4 py-2 text-gray-800">{{ user.id }}</td>
       <td class="px-4 py-2">
@@ -45,12 +45,6 @@
           class="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 m-2 rounded"
         >
           Delete
-        </button>
-        <button
-          (click)="saveUser(user.id, user.displayName)"
-          class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 m-2 rounded"
-        >
-          Save
         </button>
       </td>
     </tr>

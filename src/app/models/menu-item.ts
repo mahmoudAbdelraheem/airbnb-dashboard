@@ -32,6 +32,12 @@ const MENUITEMS: Menu[] = [
     icon: 'account_circle',
     role: '',
   },
+  {
+    state: 'seller',
+    name: 'Manage Seller',
+    icon: 'account_circle',
+    role: '',
+  },
 ];
 
 @Injectable()

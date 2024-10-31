@@ -58,6 +58,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.categoryForm = this.formBuilder.group({
       label: [null, [Validators.required]],
+      labelAr: [null, [Validators.required]],
       description: [null, Validators.required],
       icon: [null, Validators.required],
       image: [null],

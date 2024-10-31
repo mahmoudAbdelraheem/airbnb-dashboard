@@ -11,7 +11,6 @@ import {
 } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-product',
@@ -22,10 +21,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 export class ProductComponent {
   airbnbs$: Observable<any[]>;
-  isDialogOpen = false;
-  airbnbToDelete: string | null = null;
 
-  constructor(private firestore: Firestore, private dialog: MatDialog) {
+  constructor(private firestore: Firestore) {
     const collectionRef = collection(this.firestore, 'listings');
     this.airbnbs$ = collectionData(collectionRef, { idField: 'id' });
   }
@@ -72,5 +69,13 @@ export class ProductComponent {
   async toggleApproval(id: string, currentStatus: boolean) {
     const docRef = doc(this.firestore, `listings/${id}`);
     await updateDoc(docRef, { approved: !currentStatus });
+  }
+  viewListing(airbnb: any) {
+    this.dialog.open(ListingComponent, {
+      data: airbnb,
+      maxWidth: '1000px',
+      width: '90%',
+      panelClass: 'custom-dialog'
+    });
   }
 }

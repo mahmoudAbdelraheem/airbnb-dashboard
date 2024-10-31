@@ -9,6 +9,10 @@
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let element">{{ element.label }}</td>
     </ng-container>
+    <ng-container matColumnDef="nameAr">
+      <th mat-header-cell *matHeaderCellDef>Name Arabic</th>
+      <td mat-cell *matCellDef="let element">{{ element.labelAr }}</td>
+    </ng-container>
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef>Description</th>
       <td mat-cell *matCellDef="let element">{{ element.description }}</td>
@@ -26,15 +30,17 @@
           mat-icon-button
           matTooltip="Edit"
           (click)="handleEditAction(element)"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 m-2 rounded"
         >
-          <mat-icon class="text-red-500">edit</mat-icon>
+          Edit
         </button>
         <button
           mat-icon-button
           matTooltip="delete"
-          (click)="handleDeleteAction(element)"
+          (click)="openDeleteDialog(element.id)"
+          class="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 m-2 rounded"
         >
-          <mat-icon class="text-red-500">delete</mat-icon>
+          Delete
         </button>
       </td>
     </ng-container>
@@ -42,3 +48,28 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumn"></tr>
   </table>
 </div>
+@if(isDialogOpen){
+
+<div
+  class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50"
+>
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-lg font-bold mb-4">Confirm Deletion</h2>
+    <p>Are you sure you want to delete this category?</p>
+    <div class="mt-4 flex justify-end">
+      <button
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded mr-2"
+        (click)="isDialogOpen = false; airbnbToDelete = null"
+      >
+        Cancel
+      </button>
+      <button
+        class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+        (click)="handleDelete(true)"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+}
