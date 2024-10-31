@@ -38,6 +38,12 @@ const MENUITEMS: Menu[] = [
     icon: 'account_circle',
     role: '',
   },
+  {
+    state: 'admins',
+    name: 'Manage Admins',
+    icon: 'account_circle',
+    role: '',
+  },
 ];
 
 @Injectable()

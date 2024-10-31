@@ -14,6 +14,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private auth: Auth,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private firestore: Firestore
   ) {}
 
   form = this.fb.nonNullable.group({
@@ -44,12 +46,6 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
-
-    // this.authService.getAuthState().subscribe((isLoggedIn) => {
-    //   if (isLoggedIn) {
-    //     this.router.navigate(['/dashboard']);
-    //   }
-    // });
 
     this.authService.getAuthState().subscribe((isLoggedIn) => {
       const currentRoute = this.router.url;
@@ -71,7 +67,6 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGitHub() {
-    // Handle GitHub login logic
     console.log('Login with GitHub');
   }
 
@@ -88,18 +83,34 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  loginWithEmailAndPassword(): void {
+  async loginWithEmailAndPassword(): Promise<void> {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
-      signInWithEmailAndPassword(this.auth, email, password)
-        .then(() => {
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          this.auth,
+          email,
+          password
+        );
+        const userId = userCredential.user.uid;
+
+        // Check if the user exists in the "admins" collection
+        const adminDocRef = doc(this.firestore, `admins/${userId}`);
+        const adminDoc = await getDoc(adminDocRef);
+
+        if (adminDoc.exists()) {
+          // User is an admin, proceed to the dashboard
           this.router.navigate(['/dashboard']);
-        })
-        .catch((error) => {
-          console.error(error);
-          this.errorMessage = this.getErrorMessage(error);
-        });
+        } else {
+          // User is not an admin, show error and sign out
+          await this.auth.signOut();
+          this.errorMessage = 'Access restricted to admins only';
+        }
+      } catch (error) {
+        console.error(error);
+        this.errorMessage = this.getErrorMessage(error);
+      }
     } else {
       console.log('Form is invalid');
     }

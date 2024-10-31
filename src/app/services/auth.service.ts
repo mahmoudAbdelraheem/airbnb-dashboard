@@ -11,6 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { Observable, from, map, of } from 'rxjs';
 import { Iuser } from '../models/iuser';
+import { doc, Firestore, setDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,11 @@ import { Iuser } from '../models/iuser';
 export class AuthService {
   user$: Observable<any>;
 
-  constructor(private auth: Auth, private router: Router) {
+  constructor(
+    private auth: Auth,
+    private router: Router,
+    private firestore: Firestore
+  ) {
     this.user$ = user(this.auth);
   }
   currentUserSig = signal<Iuser | null | undefined>(undefined);
@@ -34,19 +39,25 @@ export class AuthService {
     });
   }
 
-  register(
-    email: string,
-    username: string,
-    password: string
-  ): Observable<void> {
-    const promise = createUserWithEmailAndPassword(
-      this.auth,
-      email,
-      password
-    ).then((response) =>
-      updateProfile(response.user, { displayName: username })
+  register(email: string, username: string, password: string) {
+    return from(
+      createUserWithEmailAndPassword(this.auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+
+          const adminRef = doc(this.firestore, 'admins', user.uid);
+          return setDoc(adminRef, {
+            email: user.email,
+            username: username,
+            role: 'admin',
+            createdAt: new Date(),
+          });
+        })
+        .catch((error) => {
+          console.error('Error registering admin:', error);
+          throw error;
+        })
     );
-    return from(promise);
   }
 
   login(email: string, password: string) {

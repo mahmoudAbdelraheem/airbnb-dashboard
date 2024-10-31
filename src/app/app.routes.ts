@@ -7,9 +7,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LayoutsComponent } from './layouts/layouts.component';
 import { ManageCategoryComponent } from './components/manage-category/manage-category.component';
 import { ProductComponent } from './components/product/product.component';
-import { RegisterComponent } from './components/register/register.component';
 import { UserComponent } from './components/user/user.component';
 import { SellerComponent } from './components/seller/seller.component';
+import { ManageAdminsComponent } from './components/manage-admins/manage-admins.component';
 
 export const routes: Routes = [
   {
@@ -44,17 +44,16 @@ export const routes: Routes = [
         path: 'seller',
         component: SellerComponent,
       },
+      {
+        path: 'admins',
+        component: ManageAdminsComponent,
+      },
     ],
   },
   {
     path: 'login',
     component: LoginComponent,
     title: 'Login',
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    title: 'Register',
   },
   {
     path: '**',
