@@ -40,7 +40,7 @@ const MENUITEMS: Menu[] = [
   },
   {
     state: 'admins',
-    name: 'Manage Admins',
+    name: 'Add Admins',
     icon: 'account_circle',
     role: '',
   },
