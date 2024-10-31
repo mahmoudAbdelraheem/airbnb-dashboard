@@ -24,6 +24,15 @@ export class ManageAdminsComponent {
 
   constructor(private router: Router, private authService: AuthService) {}
 
+  private getErrorMessage(error: any): string {
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        return 'Email already in use';
+      default:
+        return 'Invalid credentials';
+    }
+  }
+
   form = this.fb.nonNullable.group({
     username: ['', Validators.required],
     email: ['', Validators.required],
@@ -39,11 +48,10 @@ export class ManageAdminsComponent {
 
       this.authService.register(email, username, password).subscribe({
         next: () => {
-          console.log('Admin successfully registered');
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          this.errorMessage = err.code;
+          this.errorMessage = this.getErrorMessage(err);
           console.error('Registration error:', err);
         },
       });

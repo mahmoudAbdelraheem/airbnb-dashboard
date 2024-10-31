@@ -15,11 +15,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -73,13 +74,13 @@ export class LoginComponent implements OnInit {
   private getErrorMessage(error: any): string {
     switch (error.code) {
       case 'auth/user-not-found':
-        return 'No user found with this email.';
+        return 'Invalid credentials';
       case 'auth/wrong-password':
-        return 'Incorrect password.';
+        return 'Invalid credentials';
       case 'auth/invalid-email':
-        return 'Invalid email address.';
+        return 'Invalid credentials';
       default:
-        return 'An error occurred. Please try again.';
+        return 'Invalid credentials';
     }
   }
 
@@ -95,15 +96,12 @@ export class LoginComponent implements OnInit {
         );
         const userId = userCredential.user.uid;
 
-        // Check if the user exists in the "admins" collection
         const adminDocRef = doc(this.firestore, `admins/${userId}`);
         const adminDoc = await getDoc(adminDocRef);
 
         if (adminDoc.exists()) {
-          // User is an admin, proceed to the dashboard
           this.router.navigate(['/dashboard']);
         } else {
-          // User is not an admin, show error and sign out
           await this.auth.signOut();
           this.errorMessage = 'Access restricted to admins only';
         }
